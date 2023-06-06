@@ -1,0 +1,9 @@
+[
+  {
+    "model": "voyageherapi.location",
+    "pk": 1,
+    "fields": {
+      "city": "New Orleans"
+    }
+  }
+]

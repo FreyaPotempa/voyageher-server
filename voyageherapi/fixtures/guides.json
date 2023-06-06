@@ -1,0 +1,11 @@
+[
+  {
+    "model": "voyageherapi.guide",
+    "pk": 1,
+    "fields": {
+      "user": 2,
+      "bio": "that's me",
+      "location_id": 1
+    }
+  }
+]
