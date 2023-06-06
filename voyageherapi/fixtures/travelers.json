@@ -1,0 +1,10 @@
+[
+  {
+    "model": "voyageherapi.traveler",
+    "pk": 1,
+    "fields": {
+      "user": 1,
+      "bio": "first"
+    }
+  }
+]
