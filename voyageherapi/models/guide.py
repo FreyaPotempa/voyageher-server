@@ -9,6 +9,11 @@ class Guide(models.Model):
     location = models.ForeignKey(
         "Location", on_delete=models.CASCADE, related_name="guides")
 
+    @property  # decorator
+    def full_name(self):
+        """Additional field to capture from the client"""
+        return f'{self.user.first_name} {self.user.last_name}'
+
     @property
     def average_rating(self):
         '''average rating calculator per guide'''
