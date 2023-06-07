@@ -2,8 +2,9 @@ from django.http import HttpResponseServerError
 from rest_framework.viewsets import ViewSet
 from rest_framework.response import Response
 from rest_framework import status
-from voyageherapi.models import Event, Guide, Location
+from voyageherapi.models import Event, Guide, Location, Traveler
 from voyageherapi.serializers import EventSerializer
+from rest_framework.decorators import action
 
 
 class EventView(ViewSet):
@@ -55,3 +56,19 @@ class EventView(ViewSet):
         event = Event.objects.get(pk=pk)
         event.delete()
         return Response(None, status=status.HTTP_204_NO_CONTENT)
+
+    @action(methods=['post'], detail=True)
+    def signup(self, request, pk):
+        '''POST request for traveler to join event'''
+        traveler = Traveler.objects.get(user=request.auth.user)
+        event = Event.objects.get(pk=pk)
+        event.attendees.add(traveler)
+        return Response({'message': 'Traveler added'}, status=status.HTTP_201_CREATED)
+
+    @action(methods=['delete'], detail=True)
+    def leave(self, request, pk):
+        '''DELETE request for traveler to leave event'''
+        traveler = Traveler.objects.get(user=request.auth.user)
+        event = Event.objects.get(pk=pk)
+        event.attendees.remove(traveler)
+        return Response({'message': 'Traveler removed'}, status=status.HTTP_204_NO_CONTENT)
