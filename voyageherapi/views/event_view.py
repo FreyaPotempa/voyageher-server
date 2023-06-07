@@ -2,7 +2,7 @@ from django.http import HttpResponseServerError
 from rest_framework.viewsets import ViewSet
 from rest_framework.response import Response
 from rest_framework import status
-from voyageherapi.models import Event
+from voyageherapi.models import Event, Guide, Location
 from voyageherapi.serializers import EventSerializer
 
 
@@ -22,3 +22,36 @@ class EventView(ViewSet):
             return Response(serializer.data)
         except Event.DoesNotExist as ex:
             return Response({"message": ex.args[0]}, status=status.HTTP_404_NOT_FOUND)
+
+    def create(self, request):
+        '''handles POST events'''
+
+        host = Guide.objects.get(user=request.auth.user)
+        location_id = Location.objects.get(
+            id=request.data['location_id'])
+
+        event = Event.objects.create(title=request.data['title'], description=request.data['description'], img_url=request.data['img_url'],
+                                     date_time=request.data['date_time'], duration=request.data["duration"], available_spots=request.data['available_spots'], host=host, location=location_id)
+
+        serializer = EventSerializer(event)
+        return Response(serializer.data)
+
+    def update(self, request, pk):
+        '''handles PUT requests for event'''
+
+        event = Event.objects.get(pk=pk)
+        event.title = request.data['title']
+        event.description = request.data['description']
+        event.img_url = request.data['img_url']
+        event.date_time = request.data['date_time']
+        event.duration = request.data['duration']
+        event.available_spots = request.data['available_spots']
+        event.save()
+
+        return Response(None, status=status.HTTP_204_NO_CONTENT)
+
+    def destroy(self, request, pk):
+        '''deletes an event'''
+        event = Event.objects.get(pk=pk)
+        event.delete()
+        return Response(None, status=status.HTTP_204_NO_CONTENT)
