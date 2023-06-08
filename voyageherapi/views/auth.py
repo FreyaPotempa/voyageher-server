@@ -82,5 +82,5 @@ def register_user(request):
     # Return the token to the client
     data = {'token': token.key,
             'user_type': user_type,
-            'user_id': user_obj.id}
+            'user_id': new_user.id}
     return Response(data)
