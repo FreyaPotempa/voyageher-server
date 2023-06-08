@@ -1,20 +1,24 @@
 from django.http import HttpResponseServerError
 from rest_framework.viewsets import ViewSet
 from rest_framework.response import Response
+from rest_framework.permissions import AllowAny
 from rest_framework import status
 from voyageherapi.models import Event, Guide, Location, Traveler
 from voyageherapi.serializers import EventSerializer
-from rest_framework.decorators import action
+from rest_framework.decorators import action, permission_classes
 
 
 class EventView(ViewSet):
 
+    @permission_classes([AllowAny])
     def list(self, request):
         '''get a list of all events'''
+
         events = Event.objects.all()
         serializer = EventSerializer(events, many=True)
         return Response(serializer.data)
 
+    @permission_classes([AllowAny])
     def retrieve(self, request, pk):
         '''get a single event'''
         try:

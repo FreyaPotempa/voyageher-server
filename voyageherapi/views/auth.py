@@ -19,20 +19,24 @@ def login_user(request):
     username = request.data['username']
     password = request.data['password']
 
-    is_guide = 'is_guide' in request.data and request.data["is_guide"]
-
-    if is_guide:
-        user = authenticate(username=username,
-                            password=password, is_guide=True)
-    else:
-        user = authenticate(username=username, password=password)
+    user = authenticate(username=username, password=password)
 
     # If authentication was successful, respond with their token
     if user is not None:
         token = Token.objects.get(user=user)
+        user_id = user.id
+
+        user_type = None
+        if hasattr(user, 'guide'):
+            user_type = 'guide'
+        else:
+            user_type = 'traveler'
+
         data = {
             'valid': True,
-            'token': token.key
+            'token': token.key,
+            'user_type': user_type,
+            'user_id': user_id
         }
         return Response(data)
     else:
@@ -77,5 +81,6 @@ def register_user(request):
     token = Token.objects.create(user=user_obj.user)
     # Return the token to the client
     data = {'token': token.key,
-            'user_type': user_type}
+            'user_type': user_type,
+            'user_id': user_obj.id}
     return Response(data)
