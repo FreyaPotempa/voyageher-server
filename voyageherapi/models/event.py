@@ -5,7 +5,7 @@ class Event(models.Model):
     title = models.CharField(max_length=150)
     description = models.CharField(max_length=500)
     img_url = models.URLField()
-    date_time = models.DateField(auto_now=False, auto_now_add=False)
+    date_time = models.DateTimeField(auto_now=False, auto_now_add=False)
     duration = models.IntegerField()
     host = models.ForeignKey(
         "Guide", on_delete=models.CASCADE, related_name="events")
