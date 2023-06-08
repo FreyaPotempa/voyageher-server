@@ -45,7 +45,9 @@ class GuideSerializer(serializers.ModelSerializer):
     '''serializer for guides'''
     class Meta:
         model = Guide
-        fields = ['location_id', 'bio']
+        fields = ['id', 'location',
+                  'bio', 'user_id', 'full_name']
+        depth = 2
 
 
 class TravelerSerializer(serializers.ModelSerializer):

@@ -17,13 +17,14 @@ Including another URLconf
 from django.contrib import admin
 from django.conf.urls import include
 from django.urls import path
-from voyageherapi.views import register_user, login_user, EventView, UserView, LocationView
+from voyageherapi.views import register_user, login_user, EventView, UserView, LocationView, GuideView
 from rest_framework import routers
 
 router = routers.DefaultRouter(trailing_slash=False)
 router.register(r'events', EventView, 'event')
 router.register(r'users', UserView, 'user')
 router.register(r'locations', LocationView, 'location')
+router.register(r'guides', GuideView, 'guide')
 
 urlpatterns = [
     path('register', register_user),
