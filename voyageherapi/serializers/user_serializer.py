@@ -45,7 +45,9 @@ class GuideSerializer(serializers.ModelSerializer):
     '''serializer for guides'''
     class Meta:
         model = Guide
-        fields = ['location_id', 'bio']
+        fields = ['id', 'location',
+                  'bio', 'user_id', 'full_name', 'average_rating']
+        depth = 2
 
 
 class TravelerSerializer(serializers.ModelSerializer):
@@ -53,3 +55,8 @@ class TravelerSerializer(serializers.ModelSerializer):
     class Meta:
         model = Traveler
         fields = ['bio']
+
+
+class AddGuideRatingSerializer(serializers.Serializer):
+    score = serializers.IntegerField()
+    rating = serializers.CharField()
