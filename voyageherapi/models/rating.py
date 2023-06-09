@@ -2,6 +2,8 @@ from django.db import models
 
 
 class Rating(models.Model):
-    guide_id = models.ForeignKey("Guide", on_delete=models.CASCADE)
-    traveler_id = models.ForeignKey("Traveler", on_delete=models.CASCADE)
-    rating = models.IntegerField()
+    guide = models.ForeignKey(
+        "Guide", on_delete=models.CASCADE, related_name='ratings')
+    traveler = models.ForeignKey("Traveler", on_delete=models.CASCADE)
+    score = models.IntegerField()
+    review = models.TextField(null=True, blank=True)
