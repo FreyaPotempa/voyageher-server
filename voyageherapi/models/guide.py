@@ -6,6 +6,7 @@ class Guide(models.Model):
 
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     bio = models.CharField(max_length=250)
+    img = models.URLField(null=True, default=None)
     location = models.ForeignKey(
         "Location", on_delete=models.CASCADE, related_name="guides")
 
