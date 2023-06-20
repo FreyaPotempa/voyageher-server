@@ -3,7 +3,7 @@ from django.core.exceptions import ValidationError
 from rest_framework.viewsets import ViewSet
 from rest_framework.response import Response
 from rest_framework import serializers, status
-from voyageherapi.models import Guide, Traveler
+from voyageherapi.models import Guide, Traveler, Rating
 from django.contrib.auth.models import User
 
 
@@ -41,12 +41,20 @@ class UserSerializer(serializers.ModelSerializer):
             return None
 
 
+class GuideReviewSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Rating
+        fields = ('score', 'review')
+
+
 class GuideSerializer(serializers.ModelSerializer):
     '''serializer for guides'''
+    reviews = GuideReviewSerializer(many=True, read_only=True)
+
     class Meta:
         model = Guide
         fields = ['id', 'location',
-                  'bio', 'user_id', 'full_name', 'average_rating']
+                  'bio', 'user_id', 'full_name', 'average_rating', 'reviews']
         depth = 2
 
 
