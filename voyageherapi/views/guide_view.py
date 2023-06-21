@@ -21,7 +21,7 @@ class GuideView(ViewSet):
 
     def retrieve(self, request, pk):
         try:
-            guide = Guide.objects.get(pk=pk)
+            guide = Guide.objects.prefetch_related('ratings').get(pk=pk)
             serializer = GuideSerializer(guide)
             return Response(serializer.data)
         except Guide.DoesNotExist as ex:

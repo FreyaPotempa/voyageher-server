@@ -41,28 +41,21 @@ class UserSerializer(serializers.ModelSerializer):
             return None
 
 
-class GuideReviewSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Rating
-        fields = ('score', 'review')
-
-
 class GuideSerializer(serializers.ModelSerializer):
-    '''serializer for guides'''
-    reviews = GuideReviewSerializer(many=True, read_only=True)
 
     class Meta:
         model = Guide
         fields = ['id', 'location',
-                  'bio', 'user_id', 'full_name', 'average_rating', 'reviews']
-        depth = 2
+                  'bio', 'img', 'user_id', 'full_name', 'average_rating', 'ratings']
+        depth = 1
 
 
 class TravelerSerializer(serializers.ModelSerializer):
     '''serializer for travelers'''
     class Meta:
         model = Traveler
-        fields = ['bio']
+        fields = ['bio', 'user_id']
+        depth = 2
 
 
 class AddGuideRatingSerializer(serializers.Serializer):
