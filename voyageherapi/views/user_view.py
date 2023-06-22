@@ -22,3 +22,27 @@ class UserView(ViewSet):
             return Response(serializer.data)
         except User.DoesNotExist as ex:
             return Response({"message": ex.args[0]}, status=status.HTTP_404_NOT_FOUND)
+
+    def update(self, request, pk):
+
+        try:
+            user = User.objects.get(pk=pk)
+
+            if hasattr(user, 'traveler'):
+                traveler = user.traveler
+                traveler.bio = request.data.get('traveler').get('bio')
+                traveler.img = request.data.get('traveler').get('img')
+                traveler.save()
+            elif hasattr(user, 'guide'):
+                guide = user.guide
+                guide.bio = request.data.get('guide').get('bio')
+                guide.img = request.data.get('guide').get('img')
+                guide.save()
+            else:
+                return Response({'message': "user cannot but updated"})
+
+            return Response({'message': 'user updated successfully'})
+
+        except User.DoesNotExist:
+
+            return Response({'message': 'User not found'}, status=status.HTTP_404_NOT_FOUND)
