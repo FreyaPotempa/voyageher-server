@@ -2,7 +2,7 @@ from django.http import HttpResponseServerError
 from rest_framework import status
 from rest_framework.viewsets import ViewSet
 from rest_framework.response import Response
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.decorators import action, permission_classes
 from django.contrib.auth.models import User
 from voyageherapi.models import Traveler, Guide, Rating
@@ -11,6 +11,7 @@ from voyageherapi.serializers import UserSerializer, GuideSerializer
 
 
 class GuideView(ViewSet):
+
     permission_classes = [AllowAny]
 
     def list(self, request):
