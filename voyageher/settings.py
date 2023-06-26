@@ -56,7 +56,9 @@ REST_FRAMEWORK = {
 
 CORS_ORIGIN_WHITELIST = (
     'http://localhost:3000',
-    'http://127.0.0.1:3000'
+    'http://127.0.0.1:3000',
+    'http://www.voyageher.us',
+    'https://voyageher-client-c3466056026f.herokuapp.com/'
 )
 
 MIDDLEWARE = [
