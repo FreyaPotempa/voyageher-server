@@ -58,11 +58,11 @@ CORS_ORIGIN_WHITELIST = (
     'http://localhost:3000',
     'http://127.0.0.1:3000',
     'http://www.voyageher.us',
-    'https://voyageher-client-c3466056026f.herokuapp.com/'
+    'https://voyageher-client-c3466056026f.herokuapp.com'
 )
 
 MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',
+    'django.middlewarecurity.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
