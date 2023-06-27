@@ -3,7 +3,7 @@ from django.db import models
 
 class Event(models.Model):
     title = models.CharField(max_length=150)
-    description = models.CharField(max_length=500)
+    description = models.CharField(max_length=50000)
     img_url = models.URLField()
     date_time = models.DateTimeField(auto_now=False, auto_now_add=False)
     duration = models.IntegerField()
